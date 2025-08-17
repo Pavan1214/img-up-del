@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Image Uploader & Deleter</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <h1>Image Uploader & Deleter</h1>
+
+    <!-- Upload form -->
+    <form id="uploadForm">
+        <input type="text" name="title" placeholder="Image Title" required>
+        <input type="text" name="tags" placeholder="Tags (comma separated)" required>
+        <input type="file" name="image" accept="image/*" required>
+        <button type="submit">Upload Image</button>
+    </form>
+
+    <hr>
+
+    <!-- Search + Delete Selected -->
+    <input type="text" id="searchInput" placeholder="Search by title or tags...">
+    <div style="margin: 10px 0;">
+        <button id="deleteSelectedBtn">Delete Selected</button>
+    </div>
+
+    <!-- Gallery -->
+    <div id="gallery"></div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,5 +1,5 @@
 const gallery = document.getElementById("gallery");
-const API_URL = "http://localhost:5000/api/images"; // replace with your deployed backend
+const API_URL = "https://img-up-del-back.onrender.com/api/images"; // replace with your deployed backend
 const searchInput = document.getElementById("searchInput");
 const uploadForm = document.getElementById("uploadForm");
 
@@ -102,3 +102,4 @@ document.getElementById("deleteSelectedBtn").addEventListener("click", deleteSel
 
 // Initial gallery load
 loadGallery();
+

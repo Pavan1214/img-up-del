@@ -51,7 +51,12 @@ uploadForm.addEventListener("submit", async (e) => {
 multiUploadForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     const files = multiUploadForm.images.files;
+    const baseTitle = multiUploadForm.title.value.trim();
+    const baseTags = multiUploadForm.tags.value.trim();
+
     if (!files || files.length === 0) return alert("No images selected");
+    if (!baseTitle) return alert("Please enter a title");
+    if (!baseTags) return alert("Please enter at least one tag");
 
     try {
         const res = await fetch(API_URL);
@@ -59,13 +64,18 @@ multiUploadForm.addEventListener("submit", async (e) => {
         let imageCounter = existingImages.length + 1;
 
         for (let i = 0; i < files.length; i++) {
-            showLoader(`Uploading image ${i + 1} of ${files.length}...`, Math.round(((i + 1) / files.length) * 100));
+            showLoader(
+                `Uploading image ${i + 1} of ${files.length}...`,
+                Math.round(((i + 1) / files.length) * 100)
+            );
+
             const formData = new FormData();
             formData.append("image", files[i]);
-            formData.append("title", `Image ${imageCounter}`);
-            formData.append("tags", `Tag ${imageCounter}`);
+            formData.append("title", `${baseTitle} ${i + 1}`); // numbered titles
+            formData.append("tags", baseTags); // same tags for all images
+
             const uploadRes = await fetch(API_URL, { method: "POST", body: formData });
-            if (!uploadRes.ok) throw new Error(`Upload failed for Image ${imageCounter}`);
+            if (!uploadRes.ok) throw new Error(`Upload failed for ${baseTitle} ${i + 1}`);
             imageCounter++;
         }
 
@@ -80,6 +90,36 @@ multiUploadForm.addEventListener("submit", async (e) => {
         alert("Multi upload failed: " + err.message);
     }
 });
+
+// Edit image
+async function editImage(id, currentTitle, currentTags) {
+    const newTitle = prompt("Edit title:", currentTitle);
+    if (newTitle === null) return; // user cancelled
+
+    const newTags = prompt("Edit tags (comma separated):", currentTags);
+    if (newTags === null) return; // user cancelled
+
+    try {
+        showLoader("Updating image...");
+        const res = await fetch(`${API_URL}/${id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ title: newTitle.trim(), tags: newTags.split(",").map(tag => tag.trim()) })
+        });
+
+        if (!res.ok) throw new Error(`HTTP error ${res.status}`);
+        const data = await res.json();
+
+        hideLoader();
+        alert("Image updated successfully!");
+        loadGallery();
+    } catch (err) {
+        hideLoader();
+        console.error(err);
+        alert("Update failed: " + err.message);
+    }
+}
+
 
 // Load gallery
 async function loadGallery() {
@@ -100,15 +140,16 @@ function renderGallery(images) {
             <img src="${img.url}" title="${img.title}">
             <p>${img.title}</p>
             <p>Tags: ${img.tags.join(", ")}</p>
-            <button onclick="deleteImage('${img._id}')">Delete</button>
-        </div>
+<button onclick="deleteImage('${img._id}')">Delete</button>
+<button onclick="editImage('${img._id}', '${img.title}', '${img.tags.join(", ")}')">Edit</button>
+</div>
     `).join("");
 }
 
 // Search
 searchInput.addEventListener("input", () => {
     const query = searchInput.value.toLowerCase().trim();
-    const filtered = allImages.filter(img => 
+    const filtered = allImages.filter(img =>
         img.title.toLowerCase().includes(query) ||
         img.tags.some(tag => tag.toLowerCase().includes(query))
     );

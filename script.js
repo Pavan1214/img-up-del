@@ -136,7 +136,7 @@ async function loadGallery() {
 function renderGallery(images) {
     gallery.innerHTML = images.map(img => `
         <div class="image-card">
-            <input type="checkbox" class="select-image" value="${img._id}">
+             <div class = "sellect"><h6>sellect</h6><input type="checkbox" class="select-image" value="${img._id}"></div>
             <img src="${img.url}" title="${img.title}">
             <p>${img.title}</p>
             <p>Tags: ${img.tags.join(", ")}</p>

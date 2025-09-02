@@ -30,6 +30,17 @@
                     <button type="submit">Upload Multiple Images</button>
                 </form>
             </div>
+            <!-- Loader Overlay -->
+            <div id="loader-overlay" style="display:none;">
+                <div style="display: flex;align-items: center;justify-content: center; flex-direction: column;"
+                    class="flex">
+                    <div class="loader"></div>
+                    <div class="progress-bar">
+                        <div id="progress"></div>
+                    </div>
+                </div>
+                <p id="loader-text">Processing...</p>
+            </div>
 <div class="line"></div>
 <!-- Search + Delete Selected -->
 <div class="serchcontainer"> <input type="text" id="searchInput" placeholder="Search image .......">
@@ -43,21 +54,10 @@
 <div style="margin: 10px 0;">
     <span id="totalImages">Total Images: 0</span> |
 </div>
-            <!-- Loader Overlay -->
-            <div id="loader-overlay" style="display:none;">
-                <div style="display: flex;align-items: center;justify-content: center; flex-direction: column;"
-                    class="flex">
-                    <div class="loader"></div>
-                    <div class="progress-bar">
-                        <div id="progress"></div>
-                    </div>
-                </div>
-                <p id="loader-text">Processing...</p>
-            </div>
 
-            <!-- Gallery -->
-            <div id="gallery"></div>
-    </div>
+<!-- Gallery -->
+<div id="gallery"></div>
+</div>
 
 
 

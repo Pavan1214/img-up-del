@@ -21,6 +21,12 @@ body {
     top: 0;
     z-index: 999;
 }
+.sellect{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: -20px 0px;
+}
 
 .line {
     border-bottom: 2px solid white;
@@ -29,7 +35,6 @@ body {
 
 .container {
     margin-top: 73px;
-    max-width: 1000px;
     padding: 0 20px;
 }
 

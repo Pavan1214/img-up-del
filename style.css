@@ -61,11 +61,15 @@ form#uploadForm button:hover {
 }
 
 /* === DELETE SELECTED BUTTON === */
+button{
+     margin-top: 5px;
+}
 #deleteSelectedBtn {
     padding: 10px 15px;
     font-size: 16px;
     cursor: pointer;
     background-color: #ff4d4d;
+    margin-top: 30px;
     color: white;
     border: none;
     border-radius: 5px;

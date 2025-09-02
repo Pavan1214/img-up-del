@@ -2,7 +2,16 @@
 html {
     scroll-behavior: smooth;
 }
-
+#totalImages{
+    color: white;           /* White text */
+    border: 1px solid white; /* White border */
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    background-color: transparent; /* optional */
+    margin-right: 5px;
+    margin-bottom: 0px;
+}
 body {
     margin: 0;
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;

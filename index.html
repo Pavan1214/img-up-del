@@ -31,13 +31,18 @@
                 </form>
             </div>
 <div class="line"></div>
-            <!-- Search + Delete Selected -->
-            <div class="serchcontainer"> <input type="text" id="searchInput" placeholder="Search image .......">
-            </div>
-            <div style="margin: 10px 0;">
-                <button id="deleteSelectedBtn">Delete Selected</button>
-            </div>
-
+<!-- Search + Delete Selected -->
+<div class="serchcontainer"> <input type="text" id="searchInput" placeholder="Search image .......">
+</div>
+<div style="margin: 10px 0;">
+    <button id="deleteSelectedBtn">Delete Selected <span id="selectedCount">: 0</span></button>
+    <label style="color: white; "> Select All
+        <input type="checkbox" id="selectAll">
+    </label>
+</div>
+<div style="margin: 10px 0;">
+    <span id="totalImages">Total Images: 0</span> |
+</div>
             <!-- Loader Overlay -->
             <div id="loader-overlay" style="display:none;">
                 <div style="display: flex;align-items: center;justify-content: center; flex-direction: column;"

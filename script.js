@@ -185,7 +185,7 @@ selectAllCheckbox.addEventListener("change", () => {
     const checkboxes = document.querySelectorAll(".select-image");
     checkboxes.forEach(cb => cb.checked = selectAllCheckbox.checked);
     const selectedCounter = document.getElementById("selectedCount");
-    selectedCounter.textContent = `Selected: ${selectAllCheckbox.checked ? checkboxes.length : 0}`;
+    selectedCounter.textContent = `: ${selectAllCheckbox.checked ? checkboxes.length : 0}`;
 });
 
 // Search

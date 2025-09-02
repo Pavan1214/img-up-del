@@ -60,10 +60,6 @@ multiUploadForm.addEventListener("submit", async (e) => {
     if (!baseTags) return alert("Please enter at least one tag");
 
     try {
-        const res = await fetch(API_URL);
-        const existingImages = await res.json();
-        let imageCounter = existingImages.length + 1;
-
         for (let i = 0; i < files.length; i++) {
             showLoader(
                 `Uploading image ${i + 1} of ${files.length}...`,
@@ -72,12 +68,11 @@ multiUploadForm.addEventListener("submit", async (e) => {
 
             const formData = new FormData();
             formData.append("image", files[i]);
-            formData.append("title", `${baseTitle} ${i + 1}`);
-            formData.append("tags", baseTags);
+            formData.append("title", baseTitle); // ✅ same title for all
+            formData.append("tags", baseTags);   // ✅ same tags for all
 
             const uploadRes = await fetch(API_URL, { method: "POST", body: formData });
-            if (!uploadRes.ok) throw new Error(`Upload failed for ${baseTitle} ${i + 1}`);
-            imageCounter++;
+            if (!uploadRes.ok) throw new Error(`Upload failed for image ${i + 1}`);
         }
 
         hideLoader();
@@ -91,6 +86,7 @@ multiUploadForm.addEventListener("submit", async (e) => {
         alert("Multi upload failed: " + err.message);
     }
 });
+
 
 // Edit image
 async function editImage(id, currentTitle, currentTags) {

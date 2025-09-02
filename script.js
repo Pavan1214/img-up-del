@@ -1,9 +1,10 @@
 const gallery = document.getElementById("gallery");
-const API_URL = "https://img-up-del-back.onrender.com/api/images"; // replace with your backend
+const API_URL = "https://img-up-del-back.onrender.com/api/images";
 const searchInput = document.getElementById("searchInput");
 const uploadForm = document.getElementById("uploadForm");
 const multiUploadForm = document.getElementById("multiUploadForm");
 const deleteSelectedBtn = document.getElementById("deleteSelectedBtn");
+const selectAllCheckbox = document.getElementById("selectAll");
 
 let allImages = [];
 
@@ -71,8 +72,8 @@ multiUploadForm.addEventListener("submit", async (e) => {
 
             const formData = new FormData();
             formData.append("image", files[i]);
-            formData.append("title", `${baseTitle} ${i + 1}`); // numbered titles
-            formData.append("tags", baseTags); // same tags for all images
+            formData.append("title", `${baseTitle} ${i + 1}`);
+            formData.append("tags", baseTags);
 
             const uploadRes = await fetch(API_URL, { method: "POST", body: formData });
             if (!uploadRes.ok) throw new Error(`Upload failed for ${baseTitle} ${i + 1}`);
@@ -108,7 +109,7 @@ async function editImage(id, currentTitle, currentTags) {
         });
 
         if (!res.ok) throw new Error(`HTTP error ${res.status}`);
-        const data = await res.json();
+        await res.json();
 
         hideLoader();
         alert("Image updated successfully!");
@@ -119,7 +120,6 @@ async function editImage(id, currentTitle, currentTags) {
         alert("Update failed: " + err.message);
     }
 }
-
 
 // Load gallery
 async function loadGallery() {
@@ -136,15 +136,57 @@ async function loadGallery() {
 function renderGallery(images) {
     gallery.innerHTML = images.map(img => `
         <div class="image-card">
-             <div class = "sellect"><h6>sellect</h6><input type="checkbox" class="select-image" value="${img._id}"></div>
+            <div class="sellect">
+                <h6>select</h6>
+                <input type="checkbox" class="select-image" value="${img._id}">
+            </div>
             <img src="${img.url}" title="${img.title}">
             <p>${img.title}</p>
             <p>Tags: ${img.tags.join(", ")}</p>
-<button onclick="deleteImage('${img._id}')">Delete</button>
-<button onclick="editImage('${img._id}', '${img.title}', '${img.tags.join(", ")}')">Edit</button>
-</div>
+            <button onclick="deleteImage('${img._id}')">Delete</button>
+            <button onclick="editImage('${img._id}', '${img.title}', '${img.tags.join(", ")}')">Edit</button>
+        </div>
     `).join("");
+
+    // Update total images counter
+    const galleryCounter = document.getElementById("totalImages");
+    galleryCounter.textContent = `Total Images: ${images.length}`;
+
+    // Update selected images counter
+    const selectedCounter = document.getElementById("selectedCount");
+    const checkboxes = document.querySelectorAll(".select-image");
+
+    const updateSelectedCount = () => {
+        const selected = document.querySelectorAll(".select-image:checked").length;
+        selectedCounter.textContent = `: ${selected}`;
+    };
+
+    // Add event to each checkbox
+    checkboxes.forEach(cb => {
+        cb.addEventListener("change", () => {
+            updateSelectedCount();
+            updateSelectAllCheckbox();
+        });
+    });
+
+    // Initialize selected counter
+    updateSelectedCount();
 }
+
+// Update Select All checkbox state
+function updateSelectAllCheckbox() {
+    const checkboxes = document.querySelectorAll(".select-image");
+    const checked = document.querySelectorAll(".select-image:checked");
+    selectAllCheckbox.checked = (checked.length === checkboxes.length && checkboxes.length > 0);
+}
+
+// Select All functionality
+selectAllCheckbox.addEventListener("change", () => {
+    const checkboxes = document.querySelectorAll(".select-image");
+    checkboxes.forEach(cb => cb.checked = selectAllCheckbox.checked);
+    const selectedCounter = document.getElementById("selectedCount");
+    selectedCounter.textContent = `Selected: ${selectAllCheckbox.checked ? checkboxes.length : 0}`;
+});
 
 // Search
 searchInput.addEventListener("input", () => {

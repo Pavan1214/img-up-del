@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html id="home" lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -9,50 +9,52 @@
 </head>
 
 <body>
+    <div class="Title"><a style="text-decoration: none;" href="#home"><h2 class="title" style="color: white; display: flex; align-items: center;justify-content: center;">Image Uplaoder and deleter</h2></a></div>
     <div class="container">
-        <h1>Image Uploader & Deleter</h1>
+            <!-- Upload form -->
+            <form id="uploadForm">
+                <h3>Single Image Uploader</h3>
+                <input type="text" name="title" placeholder="Image Title" required>
+                <input type="text" name="tags" placeholder="Tags (comma separated)" required>
+                <input type="file" name="image" accept="image/*" required>
+                <button type="submit">Upload Image</button>
+            </form>
 
-        <!-- Upload form -->
-        <form id="uploadForm">
-            <input type="text" name="title" placeholder="Image Title" required>
-            <input type="text" name="tags" placeholder="Tags (comma separated)" required>
-            <input type="file" name="image" accept="image/*" required>
-            <button type="submit">Upload Image</button>
-        </form>
+            <!-- MULTI IMAGE UPLOADER -->
+            <div class="multi-upload-container">
+                <h2>Multi Image Uploader</h2>
+                <form id="multiUploadForm">
+                    <input type="file" name="images" accept="image/*" multiple required>
+                    <input type="text" name="title" placeholder="Enter a title for all." required>
+                    <input type="text" name="tags" placeholder="Enter tags with comma ','" required>
+                    <button type="submit">Upload Multiple Images</button>
+                </form>
+            </div>
+<div class="line"></div>
+            <!-- Search + Delete Selected -->
+            <div class="serchcontainer"> <input type="text" id="searchInput" placeholder="Search image .......">
+            </div>
+            <div style="margin: 10px 0;">
+                <button id="deleteSelectedBtn">Delete Selected</button>
+            </div>
 
-<!-- MULTI IMAGE UPLOADER -->
-<div class="multi-upload-container">
-    <h2>Multi Image Uploader</h2>
-    <form id="multiUploadForm">
-        <input type="file" name="images" accept="image/*" multiple required>
-        <input type="text" name="title" placeholder="Enter a title for all." required>
-        <input type="text" name="tags" placeholder="Enter tags with comma ','" required>
-        <button type="submit">Upload Multiple Images</button>
-    </form>
-</div>
+            <!-- Loader Overlay -->
+            <div id="loader-overlay" style="display:none;">
+                <div style="display: flex;align-items: center;justify-content: center; flex-direction: column;"
+                    class="flex">
+                    <div class="loader"></div>
+                    <div class="progress-bar">
+                        <div id="progress"></div>
+                    </div>
+                </div>
+                <p id="loader-text">Processing...</p>
+            </div>
 
-        <!-- Search + Delete Selected -->
-        <input type="text" id="searchInput" placeholder="Search by title or tags...">
-        <div style="margin: 10px 0;">
-            <button id="deleteSelectedBtn">Delete Selected</button>
-        </div>
-
-<!-- Loader Overlay -->
-<div  id="loader-overlay" style="display:none;">
-    <div style="display: flex;align-items: center;justify-content: center; flex-direction: column;" class="flex">
-        <div class="loader"></div>
-        <div class="progress-bar">
-          <div id="progress"></div>
-        </div>
+            <!-- Gallery -->
+            <div id="gallery"></div>
     </div>
-  <p id="loader-text">Processing...</p>
-</div>
 
-        <!-- Gallery -->
-        <div id="gallery"></div>
-    </div>
 
-    
 
     <script src="script.js"></script>
 </body>
